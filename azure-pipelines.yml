@@ -1,7 +1,7 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+parameters:
+  - name: targetArtifactsFeed
+    type: string
+    default: bsclib/dotnet
 
 trigger:
 - main
@@ -28,4 +28,20 @@ steps:
     inputs:
       command: test
       arguments: "--configuration Release --verbosity normal"
-    
+  - task: DotNetCoreCLI@2
+    displayName: Pack
+    inputs:
+      command: pack
+      packagesToPack: '**/*.csproj;!**/*Test*.csproj'
+      versioningScheme: byBuildNumber
+  - task: NuGetAuthenticate@1
+    displayName: NuGet Authenticate
+  - task: NuGetCommand@2
+    displayName: NuGet Push
+    inputs:
+          command: push
+          nuGetFeedType: internal
+          packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+          publishPackageMetadata: true
+          publishVstsFeed: '${{ parameters.targetArtifactsFeed }}'
+          allowPackageConflicts: true
