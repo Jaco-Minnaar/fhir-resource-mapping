@@ -34,10 +34,13 @@ steps:
       command: pack
       packagesToPack: '**/*.csproj;!**/*Test*.csproj'
       versioningScheme: byBuildNumber
+  - bash: 
   - task: NuGetAuthenticate@1
     displayName: NuGet Authenticate
   - task: NuGetCommand@2
     displayName: NuGet Push
+    env:
+      BUILD_BUILDNUMBER: "0.0.1"
     inputs:
           command: push
           nuGetFeedType: internal
