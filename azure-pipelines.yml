@@ -15,6 +15,10 @@ steps:
     inputs:
       version: 7.0.x
   - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+  - task: DotNetCoreCLI@2
     displayName: Build
     inputs:
       command: build
