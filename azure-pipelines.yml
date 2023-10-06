@@ -31,12 +31,13 @@ steps:
   - task: DotNetCoreCLI@2
     displayName: Pack
     env:
-      BUILD_BUILDNUMBER: "0.0.1"
+      BUILD_BUILDNUMBER: 0.0.1
     inputs:
-      command: pack
+      command: 'pack'
       packagesToPack: '**/*.csproj;!**/*Test*.csproj'
-      versioningScheme: byBuildNumber
-  - bash: 
+      configuration: 'Release'
+      versioningScheme: 'byBuildNumber'
+      
   - task: NuGetAuthenticate@1
     displayName: NuGet Authenticate
   - task: NuGetCommand@2
