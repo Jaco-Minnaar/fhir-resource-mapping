@@ -23,5 +23,5 @@ steps:
     displayName: Test
     inputs:
       command: test
-      arguments: "--no-build --verbosity normal"
+      arguments: "--configuration Release --verbosity normal"
     
