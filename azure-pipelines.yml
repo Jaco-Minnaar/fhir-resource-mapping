@@ -3,6 +3,9 @@ parameters:
     type: string
     default: bsclib/dotnet
 
+variables:
+  build_number: "0.0.1"
+
 trigger:
 - main
 
@@ -30,13 +33,12 @@ steps:
       arguments: "--configuration Release --verbosity normal"
   - task: DotNetCoreCLI@2
     displayName: Pack
-    env:
-      BUILD_BUILDNUMBER: 0.0.1
     inputs:
       command: 'pack'
       packagesToPack: '**/*.csproj;!**/*Test*.csproj'
       configuration: 'Release'
-      versioningScheme: 'byBuildNumber'
+      versioningScheme: byEnvVar
+      versionEnvVar: BUILD_NUMBER
       
   - task: NuGetAuthenticate@1
     displayName: NuGet Authenticate
