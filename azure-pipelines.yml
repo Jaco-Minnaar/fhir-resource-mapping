@@ -30,6 +30,8 @@ steps:
       arguments: "--configuration Release --verbosity normal"
   - task: DotNetCoreCLI@2
     displayName: Pack
+    env:
+      BUILD_BUILDNUMBER: "0.0.1"
     inputs:
       command: pack
       packagesToPack: '**/*.csproj;!**/*Test*.csproj'
@@ -39,8 +41,6 @@ steps:
     displayName: NuGet Authenticate
   - task: NuGetCommand@2
     displayName: NuGet Push
-    env:
-      BUILD_BUILDNUMBER: "0.0.1"
     inputs:
           command: push
           nuGetFeedType: internal
