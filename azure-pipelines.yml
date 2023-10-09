@@ -7,7 +7,9 @@ variables:
   build_number: "0.0.1"
 
 trigger:
-- main
+  branches:
+    include:
+      - main
 
 pool:
   vmImage: ubuntu-latest
